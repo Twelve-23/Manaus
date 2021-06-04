@@ -5,11 +5,11 @@ Mathieu Dombrock 2021
 
 Usage:
 
-node s3ncli download BUCKET TARGET DESTINATION
-node s3ncli upload BUCKET TARGET
-node s3ncli listBuckets
-node s3ncli create BUCKET
-node s3ncli listItems BUCKET PREFIX(optional)
+node ns3 download BUCKET TARGET DESTINATION
+node ns3 upload BUCKET TARGET
+node ns3 listBuckets
+node ns3 create BUCKET
+node ns3 listItems BUCKET PREFIX(optional)
 
 */
 const download = require('./download');
@@ -19,11 +19,11 @@ const create = require('./create');
 const listItems = require('./listItems');
 
 const helpText = `
-node s3ncli download BUCKET TARGET DESTINATION
-node s3ncli upload BUCKET TARGET
-node s3ncli listBuckets
-node s3ncli create BUCKET
-node s3ncli listItems BUCKET PREFIX(optional)
+node ns3 download BUCKET TARGET DESTINATION
+node ns3 upload BUCKET TARGET
+node ns3 listBuckets
+node ns3 create BUCKET
+node ns3 listItems BUCKET PREFIX(optional)
 `;
 
 async function run(){
