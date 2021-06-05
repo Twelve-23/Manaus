@@ -8,5 +8,6 @@ module.exports = {
   download: require('./download'),
   listBuckets: require('./listBuckets'),
   uploadFile: require('./uploadFile'),
+  uploadBuffer: require('./uploadBuffer'),
   listItems: require('./listItems'),
 }
