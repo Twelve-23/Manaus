@@ -13,7 +13,7 @@ node ns3 listItems BUCKET PREFIX(optional)
 
 */
 const download = require('./download');
-const upload = require('./upload');
+const uploadFile = require('./uploadFile');
 const listBuckets = require('./listBuckets');
 const create = require('./create');
 const listItems = require('./listItems');
@@ -40,7 +40,7 @@ async function run(){
         break;
       }
       console.log('Uploading file');
-      await upload(process.argv[3], process.argv[4]);
+      await uploadFile(process.argv[3], process.argv[4]);
       break;
     case 'listItems':
       if(!isValid(3)){// arg 4 is optional

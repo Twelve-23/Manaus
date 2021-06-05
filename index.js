@@ -7,6 +7,6 @@ module.exports = {
   create: require('./create'),
   download: require('./download'),
   listBuckets: require('./listBuckets'),
-  upload: require('./upload'),
+  uploadFile: require('./uploadFile'),
   listItems: require('./listItems'),
 }
