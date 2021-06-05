@@ -19,6 +19,8 @@ Creates a new bucket with the given name on S3.
 **Note: The name must be universally unique. The namespace is shared with ALL S3 users.**
 ### CLI
 `node ns3 create BUCKET`
+### Module
+`create(bucket)`
 ### Params
 * bucket - The name of the bucket to create.
 
@@ -26,6 +28,8 @@ Creates a new bucket with the given name on S3.
 Return a list of all buckets associated with the given account and region. 
 ### CLI
 `node ns3 listBuckets`
+### Module
+`list()`
 ### Params
 * none
 
@@ -33,6 +37,8 @@ Return a list of all buckets associated with the given account and region.
 Upload a file to the given bucket.
 ### CLI
 `node ns3 upload BUCKET TARGET`
+### Module
+`uploadFile(bucket, target)`
 ### Params
 * bucket -  The name of the bucket to upload to.
 * target - The local path of the file to upload
@@ -41,6 +47,8 @@ Upload a file to the given bucket.
 Upload a "file" from a buffer.
 ### CLI
 `NA`
+### Module
+`uploadData(bucket, data, fileName)`
 ### Params
 * bucket -  The name of the bucket to upload to.
 * buffer - The data to upload.
@@ -50,6 +58,8 @@ Upload a "file" from a buffer.
 Return a list of all items (objects) in the given bucket. 
 ### CLI
 `node ns3 listItems BUCKET PREFIX(optional)`
+### Module
+`listItems(bucket, prefix)`
 ### Params
 * bucket - The name of the bucket to list from.
 * prefix - The path prefix to apply when looking for items (optional).
@@ -58,6 +68,8 @@ Return a list of all items (objects) in the given bucket.
 Downloads an item (object) to local storage.
 ### CLI
 `node ns3 download BUCKET TARGET DESTINATION`
+### Module
+`download(bucket, target, destination)`
 ### Params
 * bucket - The name of the bucket to download from.
 * target - The name of the file (item/object) to download.
