@@ -14,6 +14,8 @@ node ns3 listItems BUCKET PREFIX(optional)
 */
 const fs = require('fs');
 
+const config  = require('./config.json');
+
 const {download} = require('s3-async');
 const {uploadFile} = require('s3-async');
 const {listBuckets} = require('s3-async');
@@ -27,56 +29,54 @@ node ns3 listBuckets
 node ns3 create BUCKET
 node ns3 listItems BUCKET PREFIX(optional)
 `;
-
+let argOffset = 0;// arg offset
 async function run(){
-  const flag = process.argv[2];
-  let argOff = 0;// arg offset
-  let outputFile = false;
+  argOffset = 0;
+  // Config
+  const sBucket = config ? config.static_bucket : null;
+  let outputToFile = config ? config.output_to_file : false;
+  const outputFile = config ? config.output_file : 'output-generic.txt';
+  // Flags
+  const flag = args(2);
   if(flag){
     if(flag === '-o'){
-      outputFile = true;
-      argOff = 1;
+      outputToFile = true;
+      argOffset = 1;
     }
   }
-  const args = [
-    process.argv[0],
-    process.argv[1],
-    process.argv[2+argOff],
-    process.argv[3+argOff],
-    process.argv[4+argOff],
-    process.argv[5+argOff],
-  ];
-  const cmd = args[2];
+  
+  const cmd = args(2);
+  const bucket = sBucket ? sBucket : args(3);
   let res = "";
   switch(cmd){
     // use of {} pm swotcj provides block level var scope
     case 'download':{
-      if(!isValid(5+argOff)){
+      checkSBucket()
+      if(!isValid(5)){
         break;
       }
       console.log('Downloading file');
-      const bucket = args[3];
-      const key = args[4];
-      const destination = args[5];
+      const key = args(4);
+      const destination = args(5);
       res = await download(bucket, key, destination);
       break;
     }
     case 'upload':{
-      if(!isValid(4+argOff)){
+      checkSBucket()
+      if(!isValid(4)){
         break;
       }
       console.log('Uploading file');
-      const bucket = args[3];
-      const target = args[4];
+      const target = args(4);
       res = await uploadFile(bucket, target);
       break;
     }
     case 'listItems':{
-      if(!isValid(3+argOff)){// arg 4 is optional
+      checkSBucket()
+      if(!isValid(3)){// arg 4 is optional
         break;
       }
-      const bucket = args[3];
-      const prefix = args[4];
+      const prefix = args(4);
       res = await listItems(bucket, prefix);
       break;
     }
@@ -85,32 +85,45 @@ async function run(){
       break;
     }
     case 'create':{
-      if(!isValid(3+argOff)){
+      if(!isValid(3)){
         break;
       }
       console.log('Creating Bucket');
-      const bucket = args[3];
-      res = await create();
+      const newBucket = args(3);
+      res = await create(newBucket);
       break;
     }
     case 'help':{
-      console.log(helpText);
+      res = helpText;
       break;
     }
     default:{
-      console.log('Undefined Command: '+args[2]);
-      console.log(helpText);
+      res = 'Undefined Command: '+args(2);
+      res += helpText;
     }
   }
   console.log(res);
-  if(outputFile){
-    fs.writeFileSync(__dirname+'/output.txt', JSON.stringify(res,null,2));
+  if(outputToFile){
+    fs.writeFileSync(__dirname+'/'+outputFile, JSON.stringify(res,null,2));
     console.log('Saved output to output.txt');
   }
 }
 run();
 
+function args(index){
+  const argsList = [
+    process.argv[0],
+    process.argv[1],
+    process.argv[2+argOffset],
+    process.argv[3+argOffset],
+    process.argv[4+argOffset],
+    process.argv[5+argOffset],
+  ];
+  return argsList[index];
+}
+
 function isValid(expected){
+  expected += argOffset;
   for(let i = 2; i<=expected;i++){
     if(process.argv[i] === undefined || process.argv[i]===''){
       console.log('Missing arg '+i);
@@ -118,4 +131,11 @@ function isValid(expected){
     }
   }
   return true;
+}
+
+function checkSBucket(){
+  if(sBucket){
+    // If we are using a static bucket we do not need the bucket arg
+    argOffset += -1;
+  }
 }
