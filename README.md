@@ -24,6 +24,12 @@ node ns3 create BUCKET
 node ns3 listItems BUCKET PREFIX(optional)
 ```
 
+## Optional Flags
+
+### Output to file
+You can save your non-trunicated output to `output.txt` with the `-o` flag. It can be used like this:
+`node ns3 -o listItems bucketname`
+
 ## Create Bucket
 Creates a new bucket with the given name on S3. 
 
