@@ -31,7 +31,6 @@ node ns3 listItems BUCKET PREFIX(optional)
 `;
 let argOffset = 0;// arg offset
 async function run(){
-  argOffset = 0;
   // Config
   const sBucket = config ? config.static_bucket : null;
   let outputToFile = config ? config.output_to_file : false;
