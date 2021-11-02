@@ -14,11 +14,11 @@ node ns3 listItems BUCKET PREFIX(optional)
 */
 const fs = require('fs');
 
-const download = require('./core-tools/download');
-const uploadFile = require('./core-tools/uploadFile');
-const listBuckets = require('./core-tools/listBuckets');
-const create = require('./core-tools/create');
-const listItems = require('./core-tools/listItems');
+const {download} = require('s3-async');
+const {uploadFile} = require('s3-async');
+const {listBuckets} = require('s3-async');
+const {create} = require('s3-async');
+const {listItems} = require('s3-async');
 
 const helpText = `
 node ns3 download BUCKET TARGET DESTINATION
