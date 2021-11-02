@@ -10,10 +10,8 @@ module.exports = (bucket)=>{
       // call S3 to create the bucket
       s3.createBucket(bucketParams, function(err, data) {
         if (err) {
-          console.log("Error", err);
           reject(err);
         } else {
-          console.log("Success", data.Location);
           resolve(data.Location);
         }
       });

@@ -12,7 +12,6 @@ module.exports = (bucket, target)=>{
       // Configure the file stream and obtain the upload parameters
       const fileStream = fs.createReadStream(file);
       fileStream.on('error', function(err) {
-        console.log('File Error', err);
         reject(err);
       });
       uploadParams.Body = fileStream;
@@ -20,10 +19,8 @@ module.exports = (bucket, target)=>{
       uploadParams.Key = path.basename(file);
       s3.upload (uploadParams, function (err, data) {
         if (err) {
-          console.log("Error", err);
           reject(err);
         } if (data) {
-          console.log("Upload Success", data.Location);
           resolve(data.Location);
         }
       });

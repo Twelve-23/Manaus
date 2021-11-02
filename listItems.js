@@ -1,10 +1,21 @@
 const s3 = require('./s3');
 
-module.exports = (bucket, prefix)=>{
+module.exports = async (bucket, prefix)=>{
   const params = {
     Bucket: bucket, /* required */
     Prefix: prefix  
   };
+  let grabbedData = await grab(params);
+  let out = grabbedData['Contents'];
+  while(grabbedData['NextContinuationToken']){
+    params['ContinuationToken'] = grabbedData['NextContinuationToken'];
+    grabbedData = await grab(params);
+    out.push(...grabbedData['Contents']);
+  }
+  return out;
+}
+
+function grab(params){
   return new Promise((resolve, reject)=>{
     try{
       s3.listObjectsV2(params, function(err, data) {
@@ -13,7 +24,6 @@ module.exports = (bucket, prefix)=>{
           reject(err);
         }
         else {
-          console.log(data); // successful response
           resolve(data);
         }
       });
@@ -21,5 +31,4 @@ module.exports = (bucket, prefix)=>{
       reject(err);
     }
   });
-  
 }

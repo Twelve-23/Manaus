@@ -12,10 +12,8 @@ module.exports = (bucket, data, fileName)=>{
       uploadParams.Key = path.basename(fileName);
       s3.upload (uploadParams, function (err, data) {
         if (err) {
-          console.log("Error", err);
           reject(err);
         } if (data) {
-          console.log("Upload Success", data.Location);
           resolve(data.Location);
         }
       });

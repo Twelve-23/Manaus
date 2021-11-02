@@ -6,10 +6,8 @@ module.exports = ()=>{
     try{
       s3.listBuckets(function(err, data) {
         if (err) {
-          console.log("Error", err);
           reject(err);
         } else {
-          console.log("Success", data.Buckets);
           resolve(data.Buckets);
         }
       });

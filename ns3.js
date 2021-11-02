@@ -12,6 +12,8 @@ node ns3 create BUCKET
 node ns3 listItems BUCKET PREFIX(optional)
 
 */
+const fs = require('fs');
+
 const download = require('./download');
 const uploadFile = require('./uploadFile');
 const listBuckets = require('./listBuckets');
@@ -27,43 +29,60 @@ node ns3 listItems BUCKET PREFIX(optional)
 `;
 
 async function run(){
-  switch(process.argv[2]){
+  const flag = process.argv[2];
+  let argOff = 0;// arg offset
+  let outputFile = false;
+  if(flag){
+    if(flag === '-o'){
+      outputFile = true;
+      argOff = 1;
+    }
+  }
+  const cmd = process.argv[2+argOff];
+  let res = "";
+
+  switch(cmd){
     case 'download':
-      if(!isValid(5)){
+      if(!isValid(5+argOff)){
         break;
       }
       console.log('Downloading file');
-      await download(process.argv[3], process.argv[4], process.argv[5]);
+      res = await download(process.argv[3+argOff], process.argv[4+argOff], process.argv[5+argOff]);
       break;
     case 'upload':
-      if(!isValid(4)){
+      if(!isValid(4+argOff)){
         break;
       }
       console.log('Uploading file');
-      await uploadFile(process.argv[3], process.argv[4]);
+      res = await uploadFile(process.argv[3+argOff], process.argv[4+argOff]);
       break;
     case 'listItems':
-      if(!isValid(3)){// arg 4 is optional
+      if(!isValid(3+argOff)){// arg 4 is optional
         break;
       }
-      await listItems(process.argv[3], process.argv[4]);
+      res = await listItems(process.argv[3+argOff], process.argv[4+argOff]);
       break;
     case 'listBuckets':
-      const listing = await listBuckets();
+      res = await listBuckets();
       break;
     case 'create':
-      if(!isValid(3)){
+      if(!isValid(3+argOff)){
         break;
       }
       console.log('Creating Bucket');
-      await create(process.argv[3]);
+      res = await create(process.argv[3+argOff]);
       break;
     case 'help':
       console.log(helpText);
       break;
     default:
-      console.log('Undefined Command: '+process.argv[2]);
+      console.log('Undefined Command: '+process.argv[2+argOff]);
       console.log(helpText);
+  }
+  console.log(res);
+  if(outputFile){
+    fs.writeFileSync(__dirname+'/output.txt', JSON.stringify(res,null,2));
+    console.log('Saved output to output.txt');
   }
 }
 run();
@@ -74,7 +93,6 @@ function isValid(expected){
       console.log('Missing arg '+i);
       return false;
     }
-    
   }
   return true;
 }
