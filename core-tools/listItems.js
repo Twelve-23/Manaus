@@ -1,4 +1,4 @@
-const s3 = require('./s3');
+const s3 = require('../s3');
 
 module.exports = async (bucket, prefix)=>{
   const params = {

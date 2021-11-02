@@ -1,4 +1,4 @@
-const s3 = require('./s3');
+const s3 = require('../s3');
 
 module.exports = (bucket, data, fileName)=>{
   // call S3 to retrieve upload file to specified bucket

@@ -1,4 +1,4 @@
-const s3 = require('./s3');
+const s3 = require('../s3');
 
 // Call S3 to list the buckets
 module.exports = ()=>{

@@ -14,11 +14,11 @@ node ns3 listItems BUCKET PREFIX(optional)
 */
 const fs = require('fs');
 
-const download = require('./download');
-const uploadFile = require('./uploadFile');
-const listBuckets = require('./listBuckets');
-const create = require('./create');
-const listItems = require('./listItems');
+const download = require('./core-tools/download');
+const uploadFile = require('./core-tools/uploadFile');
+const listBuckets = require('./core-tools/listBuckets');
+const create = require('./core-tools/create');
+const listItems = require('./core-tools/listItems');
 
 const helpText = `
 node ns3 download BUCKET TARGET DESTINATION
@@ -29,7 +29,7 @@ node ns3 listItems BUCKET PREFIX(optional)
 `;
 
 async function run(){
-  const flag = ;
+  const flag = process.argv[2];
   let argOff = 0;// arg offset
   let outputFile = false;
   if(flag){
@@ -46,53 +46,61 @@ async function run(){
     process.argv[4+argOff],
     process.argv[5+argOff],
   ];
-  const cmd = process.argv[2+argOff];
+  const cmd = args[2];
   let res = "";
   switch(cmd){
-    case 'download':
+    // use of {} pm swotcj provides block level var scope
+    case 'download':{
       if(!isValid(5+argOff)){
         break;
       }
       console.log('Downloading file');
-      const bucket = process.argv[3+argOff];
-      const key = process.argv[4+argOff];
-      const destination = process.argv[5+argOff];
+      const bucket = args[3];
+      const key = args[4];
+      const destination = args[5];
       res = await download(bucket, key, destination);
       break;
-    case 'upload':
+    }
+    case 'upload':{
       if(!isValid(4+argOff)){
         break;
       }
       console.log('Uploading file');
-      const bucket = process.argv[3+argOff];
-      const target = process.argv[4+argOff];
+      const bucket = args[3];
+      const target = args[4];
       res = await uploadFile(bucket, target);
       break;
-    case 'listItems':
+    }
+    case 'listItems':{
       if(!isValid(3+argOff)){// arg 4 is optional
         break;
       }
-      const bucket = process.argv[3+argOff];
-      const prefix = process.argv[4+argOff];
+      const bucket = args[3];
+      const prefix = args[4];
       res = await listItems(bucket, prefix);
       break;
-    case 'listBuckets':
+    }
+    case 'listBuckets':{
       res = await listBuckets();
       break;
-    case 'create':
+    }
+    case 'create':{
       if(!isValid(3+argOff)){
         break;
       }
       console.log('Creating Bucket');
-      const bucket = process.argv[3+argOff];
+      const bucket = args[3];
       res = await create();
       break;
-    case 'help':
+    }
+    case 'help':{
       console.log(helpText);
       break;
-    default:
-      console.log('Undefined Command: '+process.argv[2+argOff]);
+    }
+    default:{
+      console.log('Undefined Command: '+args[2]);
       console.log(helpText);
+    }
   }
   console.log(res);
   if(outputFile){
