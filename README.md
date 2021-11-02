@@ -4,6 +4,17 @@ This module is an asynchronous wrapper for the [NodeJS AWS SDK](https://docs.aws
 
 All functions provided can be used as a node module or through the custom command line interface. 
 
+## Authentication
+To use this you will need a file named `credentials` in `~/.aws/`.
+
+This file should contain something like the following:
+```
+[default]
+aws_access_key_id = <your_key_id>
+aws_secret_access_key = <your_key>
+region = us-west-2
+```
+
 ## CLI Usage
 ```
 node ns3 download BUCKET TARGET DESTINATION
