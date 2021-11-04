@@ -1,6 +1,6 @@
 # Manaus
 
-A command line utility written in NodeJS to simplify the process of working with data on Amazon S3 Buckets.
+A command line utility written in NodeJS to simplify the process of working with data on Amazon S3 Buckets. The goal of this project is to provide a more accessible version of the CLI tool provided by Amazon. 
 
 Uses [S3-Async](https://github.com/matdombrock/S3_Async)
 
@@ -25,11 +25,25 @@ mana listItems BUCKET PREFIX(optional)
 mana help
 ```
 
+## Config
+To configure Manaus with preset options like the default bucket and file output location, you can create a `config.json` file in the root directory. This file can be based off the provided `config.example.json` file. It should look something like this:
+```js
+{
+  "static_bucket":"bucket123",
+  "output_to_file":true,
+  "output_file":"~/ns3-output.txt"
+}
+```
+
+These options will become the default for any run command. However, they can be overridden by providing the corresponding argument to the CLI. 
+
 ## Optional Flags
 
 ### Output to file
 You can save your non-trunicated output to `output.txt` with the `-o` flag. It can be used like this:
 `node ns3 -o listItems bucketname`
+
+---
 
 ## Create Bucket
 Creates a new bucket with the given name on S3. 
