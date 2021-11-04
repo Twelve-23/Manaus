@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /*
 Command line interface for the async AWS wrapper
 
@@ -5,11 +6,11 @@ Mathieu Dombrock 2021
 
 Usage:
 
-node ns3 download BUCKET TARGET DESTINATION
-node ns3 upload BUCKET TARGET
-node ns3 listBuckets
-node ns3 create BUCKET
-node ns3 listItems BUCKET PREFIX(optional)
+node mana download BUCKET TARGET DESTINATION
+node mana upload BUCKET TARGET
+node mana listBuckets
+node mana create BUCKET
+node mana listItems BUCKET PREFIX(optional)
 
 */
 const fs = require('fs');

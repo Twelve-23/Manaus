@@ -1,8 +1,11 @@
 {
-  "name": "ns3",
+  "name": "manaus",
   "version": "1.0.0",
   "description": "",
-  "main": "ns3.js",
+  "main": "mana.js",
+  "bin": {
+    "ns3": "./mana.js"
+  },  
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
