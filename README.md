@@ -51,7 +51,7 @@ These options will become the default for any run command. However, they can be 
 
 ### Output to file
 You can save your non-trunicated output to `output.txt` with the `-o` flag. It can be used like this:
-`mana -o listItems bucketname`
+`mana listItems BUCKET -o`
 
 ---
 
