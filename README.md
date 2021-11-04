@@ -4,6 +4,16 @@ A command line utility written in NodeJS to simplify the process of working with
 
 Uses [S3-Async](https://github.com/matdombrock/S3_Async)
 
+## Installation
+
+You can install this package globally with the following command:
+
+```
+npm install -g https://github.com/Twelve-23/Manaus
+```
+
+---
+
 ## Authentication
 To use this you will need a file named `credentials` in `~/.aws/`.
 
