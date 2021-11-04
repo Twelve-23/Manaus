@@ -30,7 +30,13 @@ const argv = yargs(hideBin(process.argv))
 })
 .parse();
 
-const config  = require('./config.json');
+let config;
+try{
+  config  = require('./config.json');
+}catch(err){
+  //
+}
+
 
 const parameters = require('./parameters');
 
