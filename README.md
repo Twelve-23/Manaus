@@ -79,15 +79,6 @@ Upload a file to the given bucket.
 * bucket -  The name of the bucket to upload to.
 * target - The local path of the file to upload
 
-## Upload Item from Buffer
-Upload a "file" from a buffer.
-### CLI
-`NA`
-### Params
-* bucket -  The name of the bucket to upload to.
-* buffer - The data to upload.
-* fileName - The name the file should have on S3.
-
 ## List Items
 Return a list of all items (objects) in the given bucket. 
 ### CLI
