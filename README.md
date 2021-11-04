@@ -51,7 +51,7 @@ These options will become the default for any run command. However, they can be 
 
 ### Output to file
 You can save your non-trunicated output to `output.txt` with the `-o` flag. It can be used like this:
-`node mana -o listItems bucketname`
+`mana -o listItems bucketname`
 
 ---
 
@@ -60,21 +60,21 @@ Creates a new bucket with the given name on S3.
 
 **Note: The name must be universally unique. The namespace is shared with ALL S3 users.**
 ### CLI
-`node mana create BUCKET`
+`mana create BUCKET`
 ### Params
 * bucket - The name of the bucket to create.
 
 ## List Buckets
 Return a list of all buckets associated with the given account and region. 
 ### CLI
-`node mana listBuckets`
+`mana listBuckets`
 ### Params
 * none
 
 ## Upload Item from File
 Upload a file to the given bucket.
 ### CLI
-`node mana upload BUCKET TARGET`
+`mana upload BUCKET TARGET`
 ### Params
 * bucket -  The name of the bucket to upload to.
 * target - The local path of the file to upload
@@ -82,7 +82,7 @@ Upload a file to the given bucket.
 ## List Items
 Return a list of all items (objects) in the given bucket. 
 ### CLI
-`node mana listItems BUCKET PREFIX(optional)`
+`mana listItems BUCKET PREFIX(optional)`
 ### Params
 * bucket - The name of the bucket to list from.
 * prefix - The path prefix to apply when looking for items (optional).
@@ -90,7 +90,7 @@ Return a list of all items (objects) in the given bucket.
 ## Download Item
 Downloads an item (object) to local storage.
 ### CLI
-`node mana download BUCKET TARGET DESTINATION`
+`mana download BUCKET TARGET DESTINATION`
 ### Params
 * bucket - The name of the bucket to download from.
 * target - The name of the file (item/object) to download.
