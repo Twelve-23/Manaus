@@ -1,5 +1,5 @@
 {
   "static_bucket":"bucket123",
   "output_to_file":true,
-  "output_file":"output.txt"
+  "output_file":"~/ns3-output.txt"
 }

@@ -1,4 +1,6 @@
-# S3Tools
+# Manaus
+
+A command line utility written in NodeJS to simplify the process of working with data on Amazon S3 Buckets. The goal of this project is to provide a more accessible version of the CLI tool provided by Amazon. 
 
 Uses [S3-Async](https://github.com/matdombrock/S3_Async)
 
@@ -15,18 +17,33 @@ region = us-west-2
 
 ## CLI Usage
 ```
-node ns3 download BUCKET TARGET DESTINATION
-node ns3 upload BUCKET TARGET
-node ns3 listBuckets
-node ns3 create BUCKET
-node ns3 listItems BUCKET PREFIX(optional)
+mana download BUCKET TARGET DESTINATION
+mana upload BUCKET TARGET
+mana listBuckets
+mana create BUCKET
+mana listItems BUCKET PREFIX(optional)
+mana help
 ```
+
+## Config
+To configure Manaus with preset options like the default bucket and file output location, you can create a `config.json` file in the root directory. This file can be based off the provided `config.example.json` file. It should look something like this:
+```js
+{
+  "static_bucket":"bucket123",
+  "output_to_file":true,
+  "output_file":"~/ns3-output.txt"
+}
+```
+
+These options will become the default for any run command. However, they can be overridden by providing the corresponding argument to the CLI. 
 
 ## Optional Flags
 
 ### Output to file
 You can save your non-trunicated output to `output.txt` with the `-o` flag. It can be used like this:
 `node ns3 -o listItems bucketname`
+
+---
 
 ## Create Bucket
 Creates a new bucket with the given name on S3. 
@@ -78,3 +95,9 @@ Downloads an item (object) to local storage.
 * target - The name of the file (item/object) to download.
 * destination - The local destination of the downloaded item.
 
+---
+
+---
+## /mɑːˈnaʊs/
+
+> Manaus (/mɑːˈnaʊs/; Portuguese: [mɐˈnaws, mɐˈnawʃ, maˈnaws]) is the capital and largest city of the Brazilian state of Amazonas. It is the seventh-largest city in Brazil, with an estimated 2020 population of 2,219,580 distributed over a land area of about 11,401 km2 (4,402 sq mi). Located at the east center of the state, the city is the center of the Manaus metropolitan area and the largest metropolitan area in the North Region of Brazil by urban landmass. It is situated near the confluence of the Negro and Solimões rivers.
