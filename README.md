@@ -15,11 +15,12 @@ region = us-west-2
 
 ## CLI Usage
 ```
-node ns3 download BUCKET TARGET DESTINATION
-node ns3 upload BUCKET TARGET
-node ns3 listBuckets
-node ns3 create BUCKET
-node ns3 listItems BUCKET PREFIX(optional)
+ns3 download BUCKET TARGET DESTINATION
+ns3 upload BUCKET TARGET
+ns3 listBuckets
+ns3 create BUCKET
+ns3 listItems BUCKET PREFIX(optional)
+ns3 help
 ```
 
 ## Optional Flags
