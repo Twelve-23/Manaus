@@ -1,4 +1,6 @@
-# S3Tools
+# Manaus
+
+A command line utility written in NodeJS to simplify the process of working with data on Amazon S3 Buckets.
 
 Uses [S3-Async](https://github.com/matdombrock/S3_Async)
 
@@ -15,12 +17,12 @@ region = us-west-2
 
 ## CLI Usage
 ```
-ns3 download BUCKET TARGET DESTINATION
-ns3 upload BUCKET TARGET
-ns3 listBuckets
-ns3 create BUCKET
-ns3 listItems BUCKET PREFIX(optional)
-ns3 help
+mana download BUCKET TARGET DESTINATION
+mana upload BUCKET TARGET
+mana listBuckets
+mana create BUCKET
+mana listItems BUCKET PREFIX(optional)
+mana help
 ```
 
 ## Optional Flags
@@ -79,3 +81,9 @@ Downloads an item (object) to local storage.
 * target - The name of the file (item/object) to download.
 * destination - The local destination of the downloaded item.
 
+---
+
+---
+## /mɑːˈnaʊs/
+
+> Manaus (/mɑːˈnaʊs/; Portuguese: [mɐˈnaws, mɐˈnawʃ, maˈnaws]) is the capital and largest city of the Brazilian state of Amazonas. It is the seventh-largest city in Brazil, with an estimated 2020 population of 2,219,580 distributed over a land area of about 11,401 km2 (4,402 sq mi). Located at the east center of the state, the city is the center of the Manaus metropolitan area and the largest metropolitan area in the North Region of Brazil by urban landmass. It is situated near the confluence of the Negro and Solimões rivers.
