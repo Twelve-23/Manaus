@@ -14,127 +14,70 @@ node ns3 listItems BUCKET PREFIX(optional)
 */
 const fs = require('fs');
 
+const yargs = require('yargs/yargs');
+const { hideBin } = require('yargs/helpers');
+const argv = yargs(hideBin(process.argv))
+.command('listBuckets','List all buckets', (yargs)=>{})
+.command('listItems [bucket] [*prefix]','List all items in the given bucket', (yargs)=>{})
+.command('create [bucket]','Create a new bucket with the given name', (yargs)=>{})
+.command('download [bucket] [key] [destination]','Download the item with the given key from to the given destination', (yargs)=>{})
+.command('upload [bucket] [taget]','Upload the target item to the given bucket', (yargs)=>{})
+.option('output', {
+  alias: 'o',
+  type: 'string',
+  description: 'Log full output to the given file'
+})
+.parse();
+
 const config  = require('./config.json');
 
-const {download} = require('s3-async');
-const {uploadFile} = require('s3-async');
-const {listBuckets} = require('s3-async');
-const {create} = require('s3-async');
-const {listItems} = require('s3-async');
+const parameters = require('./parameters');
 
-const helpText = `
-node ns3 download BUCKET TARGET DESTINATION
-node ns3 upload BUCKET TARGET
-node ns3 listBuckets
-node ns3 create BUCKET
-node ns3 listItems BUCKET PREFIX(optional)
-`;
-let argOffset = 0;// arg offset
+const cmd = require('./cmd');
+
+const cmdMap = {
+  'download':cmd.download,
+  'listBuckets':cmd.listBuckets,
+  'listItems':cmd.listItems,
+  'createBucket':cmd.createBucket,
+  'upload':cmd.upload,
+  '?':cmd.help
+};
+
+
+// Settings
+const pConfig = {
+  sBucket: config ? config.static_bucket : null,
+  outputToFile: config ? config.output_to_file : false,
+  outputFile: config ? config.output_file : 'output-generic.txt'
+};
+
+
+
+//
 async function run(){
-  // Config
-  const sBucket = config ? config.static_bucket : null;
-  let outputToFile = config ? config.output_to_file : false;
-  const outputFile = config ? config.output_file : 'output-generic.txt';
-  // Flags
-  const flag = args(2);
-  if(flag){
-    if(flag === '-o'){
-      outputToFile = true;
-      argOffset = 1;
-    }
+  const cmd = process.argv[2];
+  const params = parameters.find(argv);
+  // Handle params
+  if(params['output']){
+    pConfig.outputToFile = true;
+    pConfig.outputFile = argv.output;
   }
-  
-  const cmd = args(2);
-  const bucket = sBucket ? sBucket : args(3);
-  let res = "";
-  switch(cmd){
-    // use of {} pm swotcj provides block level var scope
-    case 'download':{
-      checkSBucket()
-      if(!isValid(5)){
-        break;
-      }
-      console.log('Downloading file');
-      const key = args(4);
-      const destination = args(5);
-      res = await download(bucket, key, destination);
-      break;
-    }
-    case 'upload':{
-      checkSBucket()
-      if(!isValid(4)){
-        break;
-      }
-      console.log('Uploading file');
-      const target = args(4);
-      res = await uploadFile(bucket, target);
-      break;
-    }
-    case 'listItems':{
-      checkSBucket()
-      if(!isValid(3)){// arg 4 is optional
-        break;
-      }
-      const prefix = args(4);
-      res = await listItems(bucket, prefix);
-      break;
-    }
-    case 'listBuckets':{
-      res = await listBuckets();
-      break;
-    }
-    case 'create':{
-      if(!isValid(3)){
-        break;
-      }
-      console.log('Creating Bucket');
-      const newBucket = args(3);
-      res = await create(newBucket);
-      break;
-    }
-    case 'help':{
-      res = helpText;
-      break;
-    }
-    default:{
-      res = 'Undefined Command: '+args(2);
-      res += helpText;
-    }
+  if(pConfig.sBucket && !params.bucket){
+    params.bucket = pConfig.sBucket;
+    console.log('Using defualt bucket...');
   }
-  console.log(res);
-  if(outputToFile){
-    fs.writeFileSync(__dirname+'/'+outputFile, JSON.stringify(res,null,2));
-    console.log('Saved output to output.txt');
+  // Run command
+  if(cmdMap[cmd]){
+    const res = await cmdMap[cmd](params);
+    console.log(res);
+    if(pConfig.outputToFile){
+      fs.writeFileSync(pConfig.outputFile, JSON.stringify(res,null,2));
+    }
+  }else{
+    console.log('UNKNOWN COMMAND: '+cmd);
+    console.log('Use --help for commands list')
   }
 }
 run();
 
-function args(index){
-  const argsList = [
-    process.argv[0],
-    process.argv[1],
-    process.argv[2+argOffset],
-    process.argv[3+argOffset],
-    process.argv[4+argOffset],
-    process.argv[5+argOffset],
-  ];
-  return argsList[index];
-}
-
-function isValid(expected){
-  expected += argOffset;
-  for(let i = 2; i<=expected;i++){
-    if(process.argv[i] === undefined || process.argv[i]===''){
-      console.log('Missing arg '+i);
-      return false;
-    }
-  }
-  return true;
-}
-
-function checkSBucket(){
-  if(sBucket){
-    // If we are using a static bucket we do not need the bucket arg
-    argOffset += -1;
-  }
-}

@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.922.0",
-    "s3-async": "git+https://github.com/matdombrock/S3_Async.git"
+    "s3-async": "git+https://github.com/matdombrock/S3_Async.git",
+    "yargs": "^17.2.1"
   }
 }
