@@ -33,7 +33,7 @@ async function download(params){
   if(!parameters.validate(params, ['bucket','key','destination'])){
     return 'Failed!';
   }
-  return await s3.listItems(params.bucket, params.key, params.destination);
+  return await s3.download(params.bucket, params.key, params.destination);
 }
 
 async function upload(params){
