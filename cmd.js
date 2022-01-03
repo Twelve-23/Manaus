@@ -33,6 +33,11 @@ async function download(params){
   if(!parameters.validate(params, ['bucket','key'])){
     return 'Failed!';
   }
+  if(params.key === '_latest_'){
+    const items = await listItems({bucket:params.bucket});
+    const itemsSorted = items.sort((a, b) => new Date(b['LastModified']) - new Date(a['LastModified']))
+   params.key = itemsSorted[0]['Key'];
+  }
   return await s3.download(params.bucket, params.key, params.destination ? params.destination : './'+params.key);
 }
 
