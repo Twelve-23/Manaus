@@ -22,7 +22,7 @@ const argv = yargs(hideBin(process.argv))
 .command('listItems [bucket] [*prefix]','List all items in the given bucket', (yargs)=>{})
 .command('create [bucket]','Create a new bucket with the given name', (yargs)=>{})
 .command('download [bucket] [key] [destination]','Download the item with the given key from to the given destination', (yargs)=>{})
-.command('upload [bucket] [taget]','Upload the target item to the given bucket', (yargs)=>{})
+.command('upload [bucket] [target]','Upload the target item to the given bucket', (yargs)=>{})
 .option('output', {
   alias: 'o',
   type: 'string',

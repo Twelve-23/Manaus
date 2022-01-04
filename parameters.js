@@ -7,7 +7,8 @@ const paramList = [
   'bucket',
   'output',
   'key',
-  'destination'
+  'destination',
+  'target'
 ];
 const paramAlias = {
   'b':'bucket',

@@ -42,8 +42,8 @@ async function download(params){
 }
 
 async function upload(params){
-  if(!parameters.validate(params, ['bucket','destination'])){
+  if(!parameters.validate(params, ['bucket','target'])){
     return 'Failed!';
   }
-  return await s3.uploadFile(params.bucket, params.destination);
+  return await s3.uploadFile(params.bucket, params.target);
 }
