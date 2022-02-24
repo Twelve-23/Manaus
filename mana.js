@@ -46,7 +46,7 @@ const cmdMap = {
   'download':cmd.download,
   'listBuckets':cmd.listBuckets,
   'listItems':cmd.listItems,
-  'createBucket':cmd.createBucket,
+  'create':cmd.createBucket,
   'upload':cmd.upload,
   '?':cmd.help
 };
