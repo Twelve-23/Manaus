@@ -51,12 +51,13 @@ const cmdMap = {
   '?':cmd.help
 };
 
+const homedir = require('os').homedir(); 
 
 // Settings
 const pConfig = {
   sBucket: config ? config.static_bucket : null,
   outputToFile: config ? config.output_to_file : false,
-  outputFile: config ? config.output_file : 'output-generic.txt'
+  outputFile: config ? homedir + config.output_file : 'output-generic.txt'
 };
 
 

@@ -1,5 +1,5 @@
 {
   "static_bucket":"bucket123",
   "output_to_file":true,
-  "output_file":"~/mana-output.txt"
+  "output_file":"/mana-output.txt"
 }
