@@ -1,10 +1,12 @@
 const s3 = require('s3-async');
+const fs = require('fs');
 const parameters = require('./parameters');
 module.exports = {
   listBuckets,
   listItems,
   createBucket,
   download,
+  downloadBucket,
   upload,
 };
 
@@ -39,6 +41,24 @@ async function download(params){
    params.key = itemsSorted[0]['Key'];
   }
   return await s3.download(params.bucket, params.key, params.destination ? params.destination : './'+params.key);
+}
+
+async function downloadBucket(params){
+  if(!parameters.validate(params, ['target','destination'])){
+    return 'Failed!';
+  }
+  const items = await listItems({bucket:params.target});
+  
+  const dir = './'+params.destination;
+  if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir, { recursive: true });
+  }
+  for (const fileName of items) {
+    const resp = await s3.download(params.target, fileName.Key, dir);
+    console.log('🚀 ~ file: cmd.js ~ line 58 ~ downloadBucket ~ resp', resp);
+  }
+  console.log('🚀 ~ Out of the loop');
+  return "Download Completed";
 }
 
 async function upload(params){

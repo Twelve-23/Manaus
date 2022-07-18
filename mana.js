@@ -11,6 +11,7 @@ node mana upload BUCKET TARGET
 node mana listBuckets
 node mana create BUCKET
 node mana listItems BUCKET PREFIX(optional)
+node mana downloadBucket TARGET DESTINATION
 
 */
 const fs = require('fs');
@@ -22,6 +23,7 @@ const argv = yargs(hideBin(process.argv))
 .command('listItems [bucket] [*prefix]','List all items in the given bucket', (yargs)=>{})
 .command('create [bucket]','Create a new bucket with the given name', (yargs)=>{})
 .command('download [bucket] [key] [destination]','Download the item with the given key from to the given destination', (yargs)=>{})
+.command('downloadBucket [target] [destination]','Download all files from bucket with the name target from to the given destination', (yargs)=>{})
 .command('upload [bucket] [target]','Upload the target item to the given bucket', (yargs)=>{})
 .option('output', {
   alias: 'o',
@@ -44,6 +46,7 @@ const cmd = require('./cmd');
 
 const cmdMap = {
   'download':cmd.download,
+  'downloadBucket':cmd.downloadBucket,
   'listBuckets':cmd.listBuckets,
   'listItems':cmd.listItems,
   'create':cmd.createBucket,
@@ -59,8 +62,6 @@ const pConfig = {
   outputToFile: config ? config.output_to_file : false,
   outputFile: config ? homedir + config.output_file : 'output-generic.txt'
 };
-
-
 
 //
 async function run(){
@@ -78,7 +79,7 @@ async function run(){
   // Run command
   if(cmdMap[cmd]){
     const res = await cmdMap[cmd](params);
-    console.log(res);
+    console.log("response", res);
     if(pConfig.outputToFile){
       fs.writeFileSync(pConfig.outputFile, JSON.stringify(res,null,2));
     }
