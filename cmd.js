@@ -54,10 +54,8 @@ async function downloadBucket(params){
     fs.mkdirSync(dir, { recursive: true });
   }
   for (const fileName of items) {
-    const resp = await s3.download(params.target, fileName.Key, dir);
-    console.log('🚀 ~ file: cmd.js ~ line 58 ~ downloadBucket ~ resp', resp);
+    const resp = await s3.download(params.target, fileName.Key, dir + '/' + fileName.Key);
   }
-  console.log('🚀 ~ Out of the loop');
   return "Download Completed";
 }
 
