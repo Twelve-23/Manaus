@@ -12,6 +12,7 @@ node mana listBuckets
 node mana create BUCKET
 node mana listItems BUCKET PREFIX(optional)
 node mana downloadBucket TARGET DESTINATION
+node mana uploadBucket BUCKET TARGET
 
 */
 const fs = require('fs');
@@ -25,6 +26,7 @@ const argv = yargs(hideBin(process.argv))
 .command('download [bucket] [key] [destination]','Download the item with the given key from to the given destination', (yargs)=>{})
 .command('downloadBucket [target] [destination]','Download all files from bucket with the name target from to the given destination', (yargs)=>{})
 .command('upload [bucket] [target]','Upload the target item to the given bucket', (yargs)=>{})
+.command('uploadBucket [bucket] [target]','Upload all files from the target directory to the given bucket', (yargs)=>{})
 .option('output', {
   alias: 'o',
   type: 'string',
@@ -51,6 +53,7 @@ const cmdMap = {
   'listItems':cmd.listItems,
   'create':cmd.createBucket,
   'upload':cmd.upload,
+  'uploadBucket':cmd.uploadBucket,
   '?':cmd.help
 };
 
